@@ -1,5 +1,6 @@
 package uk.co.lexisnexis.risk.risk_narrative.service;
 
+import io.netty.util.internal.StringUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
@@ -11,7 +12,7 @@ public class AuthenticationService {
 
     public static Authentication getAuthentication(HttpServletRequest request) {
         String apiKey = request.getHeader(AUTH_TOKEN_HEADER_NAME);
-        if (apiKey == null ) {
+        if ( StringUtil.isNullOrEmpty(apiKey) ) {
             throw new BadCredentialsException("Invalid API Key");
         }
 
