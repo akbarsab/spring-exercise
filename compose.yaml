@@ -1,0 +1,20 @@
+services:
+  mysql:
+    image: 'mysql:latest'
+    environment:
+      - 'MYSQL_DATABASE=mydatabase'
+      - 'MYSQL_PASSWORD=secret'
+      - 'MYSQL_ROOT_PASSWORD=verysecret'
+      - 'MYSQL_USER=myuser'
+    ports:
+      - '3306'
+  migrations:
+    image: redgate/flyway
+    volumes:
+      - ./sql:/src/main/java/resources/db/migration
+    environment:
+      - FLYWAY_URL=jdbc:mysql://db:3306/mydatabase
+      - FLYWAY_USER=myuser
+      - FLYWAY_PASSWORD=secret
+      - FLYWAY_VALIDATE_MIGRATION_NAMING=true
+    command: migrate
